@@ -4,8 +4,11 @@ import {
   Roboto_500Medium,
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto'
+import { ThemeProvider } from 'styled-components/native'
 
 import { Home } from './src/screens/Home'
+import theme from './src/themes'
+import { StatusBar } from 'react-native'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -14,9 +17,14 @@ export default function App() {
     Roboto_700Bold,
   })
 
-  if (!fontsLoaded) {
-    return null
-  }
-
-  return <Home />
+  return (
+    <ThemeProvider theme={theme}>
+      {fontsLoaded ? <Home /> : null}
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+    </ThemeProvider>
+  )
 }

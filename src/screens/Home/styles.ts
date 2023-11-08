@@ -4,9 +4,9 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: #121214;
+  background-color: ${({ theme }) => theme.COLORS.BLUE_900};
 `
 
 export const Title = styled.Text`
-  color: #e1e1e6;
+  color: ${({ theme }) => theme.COLORS.GRAY_100};
 `
