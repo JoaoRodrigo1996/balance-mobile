@@ -1,9 +1,16 @@
-import { Container, Title } from './styles'
+import { Header } from '../../components/Header'
+import { Summary } from '../../components/Summary'
+
+import { Container, Content } from './styles'
 
 export function Home() {
   return (
     <Container>
-      <Title>Rodrigo Mesquita</Title>
+      <Header title="Balance" />
+
+      <Content>
+        <Summary />
+      </Content>
     </Container>
   )
 }
