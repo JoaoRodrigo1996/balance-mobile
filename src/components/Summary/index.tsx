@@ -1,34 +1,25 @@
-import { useTheme } from 'styled-components/native'
-import { Card, Container, Title, CardHeader, CardIcon, Amount } from './styles'
+import { Container, Title, CardHeader, CardIcon, Amount } from './styles'
 
-export function Summary() {
-  const colors = useTheme()
+interface SummaryProps {
+  title: string
+  amount: string
+  type: 'INCOME' | 'OUTCOME' | 'TOTAL'
+}
 
+const ICON = {
+  INCOME: 'arrow-up-circle',
+  OUTCOME: 'arrow-down-circle',
+  TOTAL: 'dollar-sign',
+}
+
+export function Summary({ title, amount, type }: SummaryProps) {
   return (
     <Container>
-      <Card>
-        <CardHeader>
-          <Title>INCOME</Title>
-          <CardIcon name="arrow-up-circle" color={colors.COLORS.GREEN_500} />
-        </CardHeader>
-        <Amount>R$ 2.500,00</Amount>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <Title>OUTCOME</Title>
-          <CardIcon name="arrow-down-circle" color={colors.COLORS.RED_500} />
-        </CardHeader>
-        <Amount>R$ 2.500,00</Amount>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <Title>TOTAL</Title>
-          <CardIcon name="dollar-sign" color={colors.COLORS.GRAY_100} />
-        </CardHeader>
-        <Amount>R$ 2.500,00</Amount>
-      </Card>
+      <CardHeader>
+        <Title>{title}</Title>
+        <CardIcon name={ICON[type]} type={type} />
+      </CardHeader>
+      <Amount>{amount}</Amount>
     </Container>
   )
 }

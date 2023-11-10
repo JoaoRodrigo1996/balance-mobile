@@ -1,14 +1,16 @@
 import styled, { css } from 'styled-components/native'
 import { Feather } from '@expo/vector-icons'
 
-export const Container = styled.View``
+type TypeProps = {
+  type: 'INCOME' | 'OUTCOME' | 'TOTAL'
+}
 
-export const Card = styled.View`
-  width: 100%;
-  padding: 16px;
-  border: 1px solid ${({ theme }) => theme.COLORS.GRAY_500};
+export const Container = styled.View`
+  padding: 20px 24px;
+  border: 1px solid ${({ theme }) => theme.COLORS.GRAY_600};
   border-radius: 4px;
-  margin-top: 16px;
+  margin-right: 16px;
+  width: 250px;
 `
 
 export const CardHeader = styled.View`
@@ -26,9 +28,25 @@ export const Title = styled.Text`
   `};
 `
 
-export const CardIcon = styled(Feather).attrs(({ theme }) => ({
-  size: theme.FONT_SIZE.MD,
-}))``
+export const CardIcon = styled(Feather)<TypeProps>`
+  font-size: ${({ theme }) => theme.FONT_SIZE.MD}px;
+
+  ${({ type }) =>
+    type === 'INCOME' &&
+    css`
+      color: ${({ theme }) => theme.COLORS.GREEN_500};
+    `}
+  ${({ type }) =>
+    type === 'OUTCOME' &&
+    css`
+      color: ${({ theme }) => theme.COLORS.RED_500};
+    `}
+  ${({ type }) =>
+    type === 'TOTAL' &&
+    css`
+      color: ${({ theme }) => theme.COLORS.GRAY_100};
+    `}
+`
 
 export const Amount = styled.Text`
   ${({ theme }) => css`
