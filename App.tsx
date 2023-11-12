@@ -6,9 +6,9 @@ import {
 } from '@expo-google-fonts/roboto'
 import { ThemeProvider } from 'styled-components/native'
 
-import { NewTransaction } from './src/screens/NewTransaction'
 import theme from './src/themes'
 import { StatusBar } from 'react-native'
+import { Routes } from './src/routes'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fontsLoaded ? <NewTransaction /> : null}
+      {fontsLoaded ? <Routes /> : null}
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"

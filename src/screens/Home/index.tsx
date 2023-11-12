@@ -13,9 +13,11 @@ import {
   SummaryCards,
   Title,
 } from './styles'
+import { useNavigation } from '@react-navigation/native'
 
 export function Home() {
   const { COLORS, FONT_SIZE } = useTheme()
+  const { navigate } = useNavigation()
 
   const transactions = [
     {
@@ -48,6 +50,10 @@ export function Home() {
     },
   ]
 
+  function handleNewTransaction() {
+    navigate('new')
+  }
+
   return (
     <Container>
       <Header title="Balance" />
@@ -59,7 +65,7 @@ export function Home() {
           <Summary amount="R$ 2.500,00" title="TOTAL" type="TOTAL" />
         </SummaryCards>
 
-        <NewTransaction>
+        <NewTransaction onPress={handleNewTransaction}>
           <Plus color={COLORS.GRAY_700} size={FONT_SIZE.MD} />
           <Title>Novo</Title>
         </NewTransaction>

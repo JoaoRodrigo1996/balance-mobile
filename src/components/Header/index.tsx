@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import {
   BackButton,
   BackIcon,
@@ -13,10 +14,16 @@ interface HeaderProps {
 }
 
 export function Header({ title, showBackButton = false }: HeaderProps) {
+  const { goBack } = useNavigation()
+
+  function handleGoBack() {
+    goBack()
+  }
+
   return (
     <Container>
       {showBackButton && (
-        <BackButton>
+        <BackButton onPress={handleGoBack}>
           <BackIcon name="chevron-left" />
         </BackButton>
       )}

@@ -18,6 +18,7 @@ export default {
     GREEN_500: '#00B37E',
     GREEN_700: '#00875F',
 
+    BLUE_100: '#749bda',
     BLUE_500: '#3576DF',
     BLUE_900: '#020817',
   },
