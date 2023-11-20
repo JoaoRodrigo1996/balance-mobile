@@ -14,45 +14,36 @@ import {
   Title,
 } from './styles'
 import { useNavigation } from '@react-navigation/native'
+import { api } from '../../lib/axios'
+import { useEffect, useState } from 'react'
+
+interface TransactionsType {
+  id: string
+  title: string
+  amount: number
+  type: 'INCOME' | 'OUTCOME'
+  createdAt: string
+}
 
 export function Home() {
   const { COLORS, FONT_SIZE } = useTheme()
   const { navigate } = useNavigation()
 
-  const transactions = [
-    {
-      id: '1',
-      title: 'Mobile App',
-      amount: 'R$ 2.500,00',
-      type: 'INCOME',
-      date: '28/10/2023',
-    },
-    {
-      id: '2',
-      title: 'Mobile App',
-      amount: 'R$ 2.500,00',
-      type: 'OUTCOME',
-      date: '28/10/2023',
-    },
-    {
-      id: '3',
-      title: 'Mobile App',
-      amount: 'R$ 2.500,00',
-      type: 'OUTCOME',
-      date: '28/10/2023',
-    },
-    {
-      id: '4',
-      title: 'Mobile App',
-      amount: 'R$ 2.500,00',
-      type: 'INCOME',
-      date: '28/10/2023',
-    },
-  ]
+  const [transactions, setTransactions] = useState<TransactionsType[]>([])
 
   function handleNewTransaction() {
     navigate('new')
   }
+
+  async function loadTransactions() {
+    const response = await api.get('/transactions')
+
+    setTransactions(response.data.transactions)
+  }
+
+  useEffect(() => {
+    loadTransactions()
+  }, [])
 
   return (
     <Container>
@@ -78,7 +69,7 @@ export function Home() {
               title={item.title}
               amount={item.amount}
               type={item.type}
-              date={item.date}
+              createdAt={item.createdAt}
             />
           )}
           contentContainerStyle={{ paddingBottom: 32, marginTop: 14 }}
