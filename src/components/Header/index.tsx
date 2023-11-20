@@ -1,12 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
-import {
-  BackButton,
-  BackIcon,
-  Container,
-  LogOutButton,
-  LogOutIcon,
-  Title,
-} from './styles'
+import { BackButton, BackIcon, Container, LogOutIcon, Title } from './styles'
+import { useAuth } from '../../hooks/useAuth'
+import { TouchableOpacity } from 'react-native'
 
 interface HeaderProps {
   showBackButton?: boolean
@@ -14,10 +9,15 @@ interface HeaderProps {
 }
 
 export function Header({ title, showBackButton = false }: HeaderProps) {
+  const { signOut } = useAuth()
   const { goBack } = useNavigation()
 
   function handleGoBack() {
     goBack()
+  }
+
+  async function handleSignOut() {
+    await signOut()
   }
 
   return (
@@ -30,9 +30,9 @@ export function Header({ title, showBackButton = false }: HeaderProps) {
 
       <Title>{title}</Title>
 
-      <LogOutButton>
+      <TouchableOpacity onPress={handleSignOut}>
         <LogOutIcon />
-      </LogOutButton>
+      </TouchableOpacity>
     </Container>
   )
 }

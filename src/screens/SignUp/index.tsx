@@ -16,6 +16,8 @@ import {
   Title,
 } from './styles'
 import { z } from 'zod'
+import { api } from '../../lib/axios'
+import { useAuth } from '../../hooks/useAuth'
 
 const signUpClientSchema = z.object({
   name: z.string(),
@@ -27,6 +29,7 @@ type SignUpClientSchema = z.infer<typeof signUpClientSchema>
 
 export function SignUp() {
   const { COLORS } = useTheme()
+  const { signIn } = useAuth()
 
   const { navigate } = useNavigation()
 
@@ -34,8 +37,13 @@ export function SignUp() {
     resolver: zodResolver(signUpClientSchema),
   })
 
-  function handleSignUp(data: SignUpClientSchema) {
-    console.log(data)
+  async function handleSignUp({ email, name, password }: SignUpClientSchema) {
+    try {
+      await api.post('/accounts', { email, name, password })
+      await signIn({ email, password })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   function handleSignIn() {

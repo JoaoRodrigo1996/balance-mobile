@@ -16,25 +16,28 @@ import {
   Title,
 } from './styles'
 import { Button } from '../../components/Button'
+import { AuthContext } from '../../contexts/auth-context'
+import { useContext } from 'react'
 
 const logInClientSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 })
 
-type LogInClientSchema = z.infer<typeof logInClientSchema>
+type LogInClientSchemaFormData = z.infer<typeof logInClientSchema>
 
 export function SignIn() {
   const { COLORS } = useTheme()
-
   const { navigate } = useNavigation()
 
-  const { control, handleSubmit } = useForm<LogInClientSchema>({
+  const { signIn } = useContext(AuthContext)
+
+  const { control, handleSubmit } = useForm<LogInClientSchemaFormData>({
     resolver: zodResolver(logInClientSchema),
   })
 
-  function handleSignIn(data: LogInClientSchema) {
-    console.log(data)
+  async function handleSignIn({ email, password }: LogInClientSchemaFormData) {
+    await signIn({ email, password })
   }
 
   function handleSignUp() {

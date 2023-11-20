@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components/native'
 import theme from './src/themes'
 import { StatusBar } from 'react-native'
 import { Routes } from './src/routes'
+import { AuthContextProvider } from './src/contexts/auth-context'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,7 +20,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fontsLoaded ? <Routes /> : null}
+      <AuthContextProvider>
+        {fontsLoaded ? <Routes /> : null}
+      </AuthContextProvider>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
