@@ -1,8 +1,9 @@
+import { priceFormatter } from '../../utils/price-formatter'
 import { Container, Title, CardHeader, CardIcon, Amount } from './styles'
 
 interface SummaryProps {
   title: string
-  amount: string
+  amount: number
   type: 'INCOME' | 'OUTCOME' | 'TOTAL'
 }
 
@@ -19,7 +20,7 @@ export function Summary({ title, amount, type }: SummaryProps) {
         <Title>{title}</Title>
         <CardIcon name={ICON[type]} type={type} />
       </CardHeader>
-      <Amount>{amount}</Amount>
+      <Amount>{priceFormatter.format(amount)}</Amount>
     </Container>
   )
 }

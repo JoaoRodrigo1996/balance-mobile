@@ -10,6 +10,7 @@ import theme from './src/themes'
 import { StatusBar } from 'react-native'
 import { Routes } from './src/routes'
 import { AuthContextProvider } from './src/contexts/auth-context'
+import { TransactionProvider } from './src/contexts/transactions-context'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,7 +22,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <AuthContextProvider>
-        {fontsLoaded ? <Routes /> : null}
+        <TransactionProvider>
+          {fontsLoaded ? <Routes /> : null}
+        </TransactionProvider>
       </AuthContextProvider>
       <StatusBar
         barStyle="light-content"

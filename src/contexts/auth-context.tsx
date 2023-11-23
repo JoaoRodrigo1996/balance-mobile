@@ -17,6 +17,7 @@ type AuthContextData = {
   signOut: () => void
   getClientProfile: () => void
   user: UserDTO
+  isLoading: boolean
 }
 
 type AuthContextProviderProps = {
@@ -27,6 +28,7 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO)
+  const [isLoading, setIsLoading] = useState(false)
 
   async function getClientProfile() {
     try {
@@ -45,6 +47,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
+      setIsLoading(true)
       const { data } = await api.post('/session', { email, password })
 
       if (data.accessToken) {
@@ -53,6 +56,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       }
     } catch (error) {
       throw error
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -75,7 +80,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, [signOut])
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, getClientProfile }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, signIn, signOut, getClientProfile }}
+    >
       {children}
     </AuthContext.Provider>
   )

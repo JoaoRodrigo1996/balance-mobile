@@ -18,6 +18,7 @@ import {
 import { z } from 'zod'
 import { api } from '../../lib/axios'
 import { useAuth } from '../../hooks/useAuth'
+import { useState } from 'react'
 
 const signUpClientSchema = z.object({
   name: z.string(),
@@ -28,6 +29,8 @@ const signUpClientSchema = z.object({
 type SignUpClientSchema = z.infer<typeof signUpClientSchema>
 
 export function SignUp() {
+  const [isLoading, setIsLoading] = useState(false)
+
   const { COLORS } = useTheme()
   const { signIn } = useAuth()
 
@@ -39,10 +42,13 @@ export function SignUp() {
 
   async function handleSignUp({ email, name, password }: SignUpClientSchema) {
     try {
+      setIsLoading(true)
       await api.post('/accounts', { email, name, password })
       await signIn({ email, password })
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -99,6 +105,7 @@ export function SignUp() {
         <Button
           title="Create"
           style={{ width: '100%' }}
+          disabled={isLoading}
           onPress={handleSubmit(handleSignUp)}
         />
         <LinkContainer>

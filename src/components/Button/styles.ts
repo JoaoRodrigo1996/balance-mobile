@@ -5,6 +5,10 @@ export const Container = styled.TouchableOpacity`
   padding: 16px;
   border-radius: 6px;
   align-items: center;
+
+  :disabled {
+    opacity: 0.6;
+  }
 `
 
 export const Title = styled.Text`

@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { ToastAndroid } from 'react-native'
 import { useTheme } from 'styled-components/native'
 import { useNavigation } from '@react-navigation/native'
 import { z } from 'zod'
@@ -5,6 +7,9 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Input } from '../../components/Form/Input'
+import { Button } from '../../components/Button'
+import { AuthContext } from '../../contexts/auth-context'
+
 import {
   Container,
   Form,
@@ -15,9 +20,6 @@ import {
   SubTitle,
   Title,
 } from './styles'
-import { Button } from '../../components/Button'
-import { AuthContext } from '../../contexts/auth-context'
-import { useContext } from 'react'
 
 const logInClientSchema = z.object({
   email: z.string().email(),
@@ -30,14 +32,19 @@ export function SignIn() {
   const { COLORS } = useTheme()
   const { navigate } = useNavigation()
 
-  const { signIn } = useContext(AuthContext)
+  const { signIn, isLoading } = useContext(AuthContext)
 
   const { control, handleSubmit } = useForm<LogInClientSchemaFormData>({
     resolver: zodResolver(logInClientSchema),
   })
 
   async function handleSignIn({ email, password }: LogInClientSchemaFormData) {
-    await signIn({ email, password })
+    try {
+      await signIn({ email, password })
+      ToastAndroid.show(`Bem vindo.`, ToastAndroid.SHORT)
+    } catch (error) {
+      ToastAndroid.show(error, ToastAndroid.SHORT)
+    }
   }
 
   function handleSignUp() {
@@ -80,6 +87,7 @@ export function SignIn() {
         <Button
           title="Enter"
           style={{ width: '100%' }}
+          disabled={isLoading}
           onPress={handleSubmit(handleSignIn)}
         />
         <LinkContainer>

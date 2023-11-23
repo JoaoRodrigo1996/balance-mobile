@@ -9,15 +9,15 @@ export const Container = styled.View`
 `
 
 export const Content = styled.View`
+  flex: 1;
   margin-top: 14px;
 `
 
 export const SummaryCards = styled.ScrollView.attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
-  contentContainerStyle: { paddingRight: 24 },
 })`
-  width: 100%;
+  position: absolute;
 `
 
 interface NewTransactionProps extends TouchableOpacityProps {}
@@ -30,8 +30,9 @@ export const NewTransaction = styled(TouchableOpacity)<NewTransactionProps>`
   background-color: ${({ theme }) => theme.COLORS.BLUE_500};
   padding: 8px 16px;
   border-radius: 4px;
-  margin-top: 14px;
+  margin-top: 112px;
   margin-left: auto;
+  margin-bottom: 14px;
 `
 
 export const Title = styled.Text`
