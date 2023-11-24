@@ -43,7 +43,10 @@ export function SignIn() {
       await signIn({ email, password })
       ToastAndroid.show(`Bem vindo.`, ToastAndroid.SHORT)
     } catch (error) {
-      ToastAndroid.show(error, ToastAndroid.SHORT)
+      ToastAndroid.show(
+        'Não foi possível efetuar o login. Tente novamente mais tarde!',
+        ToastAndroid.SHORT,
+      )
     }
   }
 

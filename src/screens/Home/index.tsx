@@ -1,14 +1,16 @@
-import { useContext, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { useContext, useEffect } from 'react'
 import { FlatList } from 'react-native'
 import { useTheme } from 'styled-components/native'
 import { Plus } from 'lucide-react-native'
 
-import { Header } from '../../components/Header'
-import { Summary } from '../../components/Summary'
-import { Transactions } from '../../components/Transactions'
-
 import { TransactionContext } from '../../contexts/transactions-context'
+import { Transactions } from '../../components/Transactions'
+import { useSummary } from '../../hooks/useSummary'
+import { EmptyList } from '../../components/EmptyList'
+import { Summary } from '../../components/Summary'
+import { Loading } from '../../components/Loading'
+import { Header } from '../../components/Header'
 
 import {
   Container,
@@ -17,9 +19,6 @@ import {
   SummaryCards,
   Title,
 } from './styles'
-import { EmptyList } from '../../components/EmptyList'
-import { Loading } from '../../components/Loading'
-import { useSummary } from '../../hooks/useSummary'
 
 export function Home() {
   const { COLORS, FONT_SIZE } = useTheme()
@@ -59,7 +58,7 @@ export function Home() {
         ) : (
           <FlatList
             data={transactions}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.createdAt}
             renderItem={({ item }) => (
               <Transactions
                 title={item.title}

@@ -15,7 +15,7 @@ const ICON = {
 
 export function Summary({ title, amount, type }: SummaryProps) {
   return (
-    <Container>
+    <Container type={type}>
       <CardHeader>
         <Title>{title}</Title>
         <CardIcon name={ICON[type]} type={type} />

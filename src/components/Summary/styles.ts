@@ -5,9 +5,25 @@ type TypeProps = {
   type: 'INCOME' | 'OUTCOME' | 'TOTAL'
 }
 
-export const Container = styled.View`
+export const Container = styled.View<TypeProps>`
   padding: 20px 24px;
-  border: 1px solid ${({ theme }) => theme.COLORS.GRAY_600};
+  border-width: 1px;
+  border-style: solid;
+  ${({ theme, type }) =>
+    type === 'INCOME' &&
+    css`
+      border-color: ${theme.COLORS.GREEN_100};
+    `}
+  ${({ theme, type }) =>
+    type === 'OUTCOME' &&
+    css`
+      border-color: ${theme.COLORS.RED_100};
+    `}
+  ${({ theme, type }) =>
+    type === 'TOTAL' &&
+    css`
+      border-color: ${theme.COLORS.GRAY_100};
+    `}
   border-radius: 4px;
   margin-right: 16px;
   width: 250px;

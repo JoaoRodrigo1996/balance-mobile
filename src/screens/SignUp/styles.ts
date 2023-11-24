@@ -1,4 +1,3 @@
-import { TouchableOpacity } from 'react-native'
 import styled, { css } from 'styled-components/native'
 
 export const Container = styled.View`
@@ -47,7 +46,7 @@ export const LinkContainer = styled.View`
   justify-content: center;
 `
 
-export const Link = styled(TouchableOpacity)``
+export const Link = styled.TouchableOpacity``
 
 export const LinkText = styled.Text`
   ${({ theme }) => css`

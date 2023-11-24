@@ -1,4 +1,4 @@
-import { TouchableOpacityProps, TouchableOpacity } from 'react-native'
+import { TouchableOpacityProps } from 'react-native'
 
 import styled, { css } from 'styled-components/native'
 
@@ -20,9 +20,7 @@ export const SummaryCards = styled.ScrollView.attrs({
   position: absolute;
 `
 
-interface NewTransactionProps extends TouchableOpacityProps {}
-
-export const NewTransaction = styled(TouchableOpacity)<NewTransactionProps>`
+export const NewTransaction = styled.TouchableOpacity<TouchableOpacityProps>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
