@@ -6,6 +6,8 @@
     "camelcase": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "no-useless-catch": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "no-async-promise-executor": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

@@ -1,5 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
-import { storageGetAuthToken } from '../storage/storageAuthToken'
+import {
+  storageGetAuthToken,
+  storageSaveAuthToken,
+} from '../storage/storageAuthToken'
 import { AppError } from '../utils/AppError'
 
 type SignOut = () => void
@@ -18,7 +21,7 @@ const api = axios.create({
   timeout: 6000,
 }) as APIInstanceProps
 
-const failedQueue: Array<PromiseType> = []
+let failedQueue: Array<PromiseType> = []
 let isRefreshing = false
 
 api.registerInterceptTokenManager = (signOut) => {
@@ -53,6 +56,42 @@ api.registerInterceptTokenManager = (signOut) => {
           }
 
           isRefreshing = true
+
+          return new Promise(async (resolve, reject) => {
+            try {
+              const { data } = await api.post('/sessions')
+              await storageSaveAuthToken(accessToken)
+
+              if (originalRequestConfig.data) {
+                originalRequestConfig.data = JSON.parse(
+                  originalRequestConfig.data,
+                )
+              }
+
+              originalRequestConfig.headers = {
+                Authorization: `Bearer ${data.token}`,
+              }
+              api.defaults.headers.common.Authorization = `Bearer ${data.token}`
+
+              failedQueue.forEach((request) => {
+                request.onSuccess(data.token)
+              })
+
+              console.log('TOKEN ATUALIZADO')
+
+              resolve(api(originalRequestConfig))
+            } catch (error: any) {
+              failedQueue.forEach((request) => {
+                request.onFailure(error)
+              })
+
+              signOut()
+              reject(error)
+            } finally {
+              isRefreshing = false
+              failedQueue = []
+            }
+          })
         }
       }
       signOut()
