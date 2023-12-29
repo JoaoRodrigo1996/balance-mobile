@@ -61,6 +61,7 @@ export function Home() {
             keyExtractor={(item) => item.createdAt}
             renderItem={({ item }) => (
               <Transactions
+                key={item.id}
                 title={item.title}
                 amount={item.amount}
                 type={item.type}
